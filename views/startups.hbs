@@ -1,0 +1,97 @@
+<div class="row">
+<form class="col s12">
+    <div class="row startupHeader">
+    <div style="margin-left: 100px;" class="input-field col s8">
+        {{#if getMore}}
+            <strong >Trending startup  : {{searchOptions.title}}</strong>
+        {{else}}
+            <strong >Trending startup : {{searchBy}} {{searchOptions.title}} </strong>
+        {{/if}}
+    </div>
+        <div class="input-field col s3">
+            <form action="/startups" method="get">
+                <div class="form-group has-search">
+                    <span 
+                        class="fa fa-search form-control-feedback material-icons">
+                        search 
+                        <input type="text" id="elastic" class="form-control" placeholder="Search" name="title" value="{{searchOptions.title}}" >
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</form>
+</div>
+
+<div class="container cards" id="card">
+{{#each startups}}
+    <div class="card">
+        <div class="card-image">
+           
+            <div id="modal{{@index}}" class="modal">
+                <div style="margin-bottom: 0px; padding-bottom: 0px" class="modal-content">
+                    <h3 class="modalText">{{title}}</h3>
+                    <h5 class="modalText" style="margin-bottom: 18px">{{desc}}</h5>
+                    <img  src="{{img}}" alt="{{title}}">
+                    <p class="modalText">{{full_desc}}</p>
+                    <p class="modalTextCreater"> {{userId.name}}</p>
+                    <p class="modalTextCreater">{{userId.email}}</p>
+                </div>
+                <div style="padding-right: 30px; margin-bottom:10px" class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                    <a href="{{resource_link}}" class="btn btnVisit" target="_blank"> Visit site</a>
+                </div>
+            </div>
+
+            <a class=" modal-trigger" href="#modal{{@index}}"><img class="img_card" src="{{img}}"  alt="{{title}}"></a>
+        </div>
+        <div class="card-content">
+            <span class="card-title">{{title}}</span>
+            <p>{{desc}}</p>
+        </div>
+        <div class="card-action">
+            <div style="display: flex;">
+                <div class="like-course">
+                    {{#isLiked _id  @root.newArr}}
+                            <button style="background:firebrick;" type="submit" id="like" 
+                            class="btn btn-small js-remove material-icons" 
+                            data-id="{{_id}}"
+                            data-csrf={{@root.csrf}}
+                        >thumb_up
+                        </button> 
+                    {{else}}
+                        <button  type="submit" id="like" 
+                            class="btn btn-small js-remove material-icons" 
+                            data-id="{{_id}}"
+                            data-csrf={{@root.csrf}}
+                        >thumb_up
+                    </button> 
+                    {{/isLiked}}
+                    <i class="like-count">{{likeCount}}</i>
+                </div>
+                {{#if userId.avatarUrl}}
+                    <a class="hrefImage" href="/profile/{{userId._id}}"><img class="avatarUnderStartup" src="/{{userId.avatarUrl}}" alt="avatar-{{user.name}}"></a>
+                {{/if}}
+
+            </div>
+            <p class="date">{{createdDate}}</p>
+        </div>
+    </div>
+{{/each}}
+</div>
+
+{{#if getMore}}
+<button style="margin-left: 48%; margin-bottom:20px;" 
+        class="btn upload_cards mx-auto" 
+        data-csrf={{csrf}}>Get more
+</button>
+{{/if}}
+ 
+
+
+ {{!--{{#if @root.isAuth}}
+             {#ifeq @root.userId userId._id}}
+                  <button  class="btn btn-small"><a style="color: white;" href="/startups/edit/{{_id}}?allow=true">Edit</a></button>
+              {{/ifeq}}
+      {{/if}}
+ --}}

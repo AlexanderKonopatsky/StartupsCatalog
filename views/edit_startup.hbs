@@ -1,0 +1,106 @@
+
+<div style="margin-top: 50px;" class="container">
+    <strong>Edit startup</strong>
+    <br>
+    
+    {{#if errorEdit}}
+      <p class="alert">{{errorEdit}}</p>
+    {{/if}}
+
+    <br>
+    <form action="/startups/edit" method="POST" class="edit_startup">
+       
+        <div class="input-field">
+            <input name="title" id="title" type="text" class="validate" value="{{startup.title}}">
+            <label for="title">Title</label>
+            <span class="helper-text" data-error="Enter title"></span>
+        </div>
+
+        <div class="input-field">
+            <input name="desc" id="short_description" type="text" class="validate" value="{{startup.desc}}" >
+            <label for="short_description">Short desc</label>
+            <span class="helper-text" data-error="Enter desc"></span>
+        </div>
+
+        <div class="input-field">
+            <input name="full_desc" id="full_desc" type="text" class="validate" value="{{startup.full_desc}}">
+            <label for="full_desc">Full desc</label>
+            <span class="helper-text" data-error="Enter full desc"></span>
+        </div>
+
+        <div class="input-field">
+            <input name="resource_link" id="resource_link" type="text" class="validate" value="{{startup.resource_link}}">
+            <label for="resource_link">Resource link</label>
+            <span class="helper-text" data-error="Enter resource link"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-4 col-md-4">
+                <label>Select region</label>
+                <select id="option_region" name="region" class="selectpicker" data-style="btn-info">
+                    <option>Europe</option>
+                    <option>Asia</option>
+                    <option>Africa</option>
+                    <option>South america</option>
+                </select>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <label>Select country</label>
+                <select id="option_country" name="country" class="selectpicker" data-style="btn-info">
+                    {{#each reg1}}
+                        <option>{{text}}</option>
+                    {{/each}}
+
+                    {{#each reg2}}
+                        <option>{{text}}</option>
+                    {{/each}}
+                   
+
+                </select>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <label>Select market</label>
+                <select id="option_market" name="market_type" class="selectpicker" data-style="btn-info">
+                    {{#each marketArray}}
+                        <option>{{text}}</option>
+                    {{/each}}       
+                </select>
+            </div>
+
+        </div>
+
+        <div class="input-field">
+            <input name="img" id="img" type="text" class="validate" value="{{startup.img}}">
+            <label for="img">Image</label>
+            <span class="helper-text" data-error="Enter url for img"></span>
+        </div>
+
+        <input type="hidden" name="id" value="{{startup._id}}">
+
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+
+        <button type="submit" class="btn btn-primary">Edit startup</button>
+
+    </form>
+
+    <form action="/startups/remove" method="POST">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <input type="hidden" name="id" value="{{startup._id}}">
+        <button type="submit" class="btn red">Delete startup</button>
+    </form>
+    <br><br>
+</div>
+
+
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>

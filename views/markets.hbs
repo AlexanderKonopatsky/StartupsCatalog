@@ -1,0 +1,24 @@
+{{#each arr}}
+    <p>{{color}}</p>
+     <p>{{text}}</p>
+
+{{/each}}
+
+
+<div class="market">
+    <strong id="_title">Markets</strong>
+    <p class="p_info">BROWSE STARTUP BY INDUSTRY</p>
+
+
+<div class="regions">
+    <div class='regionDeck'>
+
+        {{#each marketArray}} 
+                <p class="example-shadow-2"><a href="/startups?market={{text}}" style="background-color: #40b1bf">{{text}}</a></p>
+        {{/each}}
+
+        </a>
+    </div>
+</div>
+
+

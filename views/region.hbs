@@ -1,0 +1,26 @@
+
+<div class="startup">
+    <strong id="_title">Made in {{curCountry}}</strong>
+    <p class="p_info">{{startup.length}} STARTUPS</p>
+</div>
+{{#if startup}}
+<div class="container cards">
+    {{#each startup}}
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{img}}"  alt="{{title}}">         
+                </div>
+                <div class="card-content">
+                    <span class="card-title">{{title}}</span>
+                    <p>{{desc}}</p>
+                </div>
+                    <div class="card-action">
+                    <a href="/startups/{{_id}}" target="_blank">Open startup</a>
+                    <a href="/startups/edit/{{_id}}?allow=true">Edit</a>
+                </div>
+            </div>
+    {{/each}}
+</div>
+{{else}}
+
+{{/if}}

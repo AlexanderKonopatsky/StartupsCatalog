@@ -1,0 +1,68 @@
+<nav>
+    <div  class="nav-wrapper">
+        <a href="/startups" class="brand-logo">Startups</a>
+        <ul  class="right hide-on-med-and-down">
+
+            {{#if isAdmin}}
+                <li style="margin-top: 6px;"><span  class="material-icons">account_circle</span></li>
+                <li >{{username}}: </li>
+                <li style="margin-right: 75px;"><a href="/admin">panel</a></li>
+            {{else}} 
+                <li style="margin-top: 6px;"><span  class="material-icons">account_circle</span></li>
+                <li style="margin-right: 75px;" >{{username}}</li>
+            {{/if}}
+ 
+            {{#if isIndex}}
+                <li class="active"><a href="/startups">Front page</a></li>
+            {{else}}
+                <li><a href="/startups">Front page</a></li>
+            {{/if}}
+            
+
+            {{#if ifRegion}}
+                <li class="active"><a href="/regions">Regions</a></li>
+            {{else}}
+                <li><a href="/regions">Region</a></li>
+            {{/if}}
+            
+            {{#if isMarkets}}
+                <li class="active"><a href="/markets">Markets</a></li>
+            {{else}}
+                <li><a href="/markets">Markets</a></li>
+            {{/if}}
+
+
+            {{#if isAuth}}
+                {{#if isProfile}}
+                    <li class="active"><a href="/profile">Profile</a></li>
+                {{else}}
+                    <li><a href="/profile">Profile</a></li>
+                {{/if}}
+
+                {{#if isAdd}}
+                    <li class="active"><a href="/add">Add startup</a></li>
+                {{else}}
+                    <li><a href="/add">Add startup</a></li>
+                {{/if}}
+
+                {{#if isSettings}}
+                    <li class="active"><a href="/settings">Settings</a></li>
+                {{else}}
+                    <li><a href="/settings">Settings</a></li>
+                {{/if}}
+
+                <li><a href="/auth/logout">Login / Logout</a></li>
+            {{else}}
+                {{#if isLogin}}
+                    <li class="active"><a href="/auth/login">Login / Logout</a></li>
+                {{else}}
+                    <li><a href="/auth/login">Login / Logout</a></li>
+                {{/if}}
+            {{/if}}
+
+   
+
+
+        </ul>
+    </div>
+</nav>
