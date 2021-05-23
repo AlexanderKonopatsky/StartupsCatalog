@@ -35,9 +35,7 @@ strong {
     margin-right: 50%;
 }
 
-.nav-wrapper {
-    background-color:indianred;
-}
+
 
 #main {
     align-content: center;
@@ -183,6 +181,8 @@ a {
     background: #55acee;
     box-shadow: 0 5px 0 #3C93D5;
     transition: .3s;
+    background-color: #40b1bf;
+    
 }
 
 .example-shadow-2 a:hover {
@@ -299,7 +299,7 @@ a {
 }
 
 .nav-wrapper {
-    background-color:rgb(17, 60, 21);
+    background-color:rgb(97, 13, 13)
 }
 
 .activeLike {

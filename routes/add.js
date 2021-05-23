@@ -12,13 +12,10 @@ const reg2 = regionData.regionAsia;
 const reg3 = regionData.regionSouthAmerica
 const reg4 = regionData.regionNorthAmerica;
 const reg5 = regionData.regionAfrica;
-const markets = marketArray.text;
 
 
 router.get('/', auth, (req, res) => {
-    let isAdmin = false 
-    if (!(req.hasOwnProperty('user') && req.user.role == 'USER'))  isAdmin = true
-    res.render('add', { title: 'Add', isAdd: true, reg1, reg2, reg3, reg4, reg5, marketArray, isAdmin, username: req.user.name, } )
+    res.render('add', { title: 'Add', isAdd: true, reg1, reg2, reg3, reg4, reg5, marketArray } )
 } )
 
 router.post('/', auth, startupValidator, async (req, res) => {

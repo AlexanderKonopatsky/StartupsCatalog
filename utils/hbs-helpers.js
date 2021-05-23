@@ -7,7 +7,7 @@ module.exports = {
         }
     }, 
     isLiked(a, b, options) {
-        let check = true       
+        let check = true     
         b.forEach(el => {
             if (el.toString() == a.toString()) {
                 check = false;

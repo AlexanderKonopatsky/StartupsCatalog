@@ -10,12 +10,12 @@ module.exports = function(req, res, next) {
 
     if (role === 'ADMIN') {
         can("read", "all")
-        can(["update", "delete", "create"], ["startupsEdit"])
+        can(["read", "update", "delete", "create"], ["adminContent"])
     } 
 
     if (role === 'USER') {
-        can('read', ["startupsEdit"])
-    }
+        can('read', ["adminContent"])
+    } 
 
     req.ability = new Ability(rules)
     next()

@@ -34,8 +34,9 @@
                     <h5 class="modalText" style="margin-bottom: 18px">{{desc}}</h5>
                     <img  src="{{img}}" alt="{{title}}">
                     <p class="modalText">{{full_desc}}</p>
-                    <p class="modalTextCreater"> {{userId.name}}</p>
-                    <p class="modalTextCreater">{{userId.email}}</p>
+                    <p class="modalTextCreater"> {{country}} : {{market_type}}</p>
+                    <p class="modalTextCreater"> {{userId.name}} : {{userId.email}}</p>
+         
                 </div>
                 <div style="padding-right: 30px; margin-bottom:10px" class="modal-footer">
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -52,7 +53,7 @@
         <div class="card-action">
             <div style="display: flex;">
                 <div class="like-course">
-                    {{#isLiked _id  @root.newArr}}
+                    {{#isLiked _id  @root.startupWithLikeArr}}
                             <button style="background:firebrick;" type="submit" id="like" 
                             class="btn btn-small js-remove material-icons" 
                             data-id="{{_id}}"
@@ -95,3 +96,6 @@
               {{/ifeq}}
       {{/if}}
  --}}
+
+<script src="socket.js"></script>
+<script src = "/socket.io/socket.io.js"></script>

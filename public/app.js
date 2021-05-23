@@ -1,5 +1,6 @@
-const socket = io('http://localhost:3000');
-let count = document.getElementsByClassName('like-count')[1];
+const url = window.location.protocol + '//' + window.location.host
+
+const socket = io(url);
 let form = document.getElementsByClassName('like-course');
 
 
@@ -14,28 +15,37 @@ const toDate = date => {
 
 let countListener = 0
 function emitLike() {
-    let counter = 0
+    let counter = 0, count 
     form = document.getElementsByClassName('like-course');
-    console.log('------------------', form.length, '------------------')
     for (let i = countListener; i < form.length; i++) {
         form[i].addEventListener('click', e => {
-
             e.preventDefault();
             count = e.target.parentNode.childNodes[3]
-
             socket.emit('liked', { res: e.target.dataset.id});
-            console.log(e.target.parentNode.childNodes[1].style.background)
             if (e.target.parentNode.childNodes[1].style.background == 'firebrick') {
                 count.innerText = parseInt(count.innerText) - 1
             } else {
                 count.innerText = parseInt(count.innerText) + 1
             }
-            
-            
         });
     } 
     countListener += form.length % 4 + 4
 }
+
+
+socket.on('like-course', (value) => {
+    let likes = value.likeCount
+    const form = document.getElementsByClassName('like-course');
+    for (var i = 0; i < form.length; i++) {
+        let elemId = form[i].childNodes[1].dataset.id
+        if (elemId.toString() == value.id.toString()) {
+            let countLike = form[i].childNodes[3]
+            countLike.innerText = likes
+            break
+        } 
+    }
+})
+
 
 let numberPageAdminNext = 0
 function uploadCardsAdminNext() {
@@ -218,11 +228,13 @@ function uploadCards() {
              name = startup.userId.name
              email = startup.userId.email
              userId = startup.userId._id
+             country = startup.counter
+             market = startup.market_type
              createdDate = toDate(startup.createdDate)
              counterModalWindow++
              let checkLiked = false
 
-             s.newArr.forEach(el => {
+             s.startupWithLikeArr.forEach(el => {
                  if (el.toString() == _id.toString()) {
                     checkLiked = true
                  }
@@ -240,6 +252,8 @@ function uploadCards() {
                             <p class="modalText">${full_desc}</p>
                             <p class="modalTextCreater"> ${name}</p>
                             <p class="modalTextCreater">${email}</p>
+                            <p class="modalTextCreater"> ${country} : ${market}</p>
+                            <p class="modalTextCreater"> ${name} : ${email}</p>
                         </div>
                         <div style="padding-right: 30px; margin-bottom:10px" class="modal-footer">
                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -284,6 +298,8 @@ function uploadCards() {
                             <p class="modalText">${full_desc}</p>
                             <p class="modalTextCreater"> ${name}</p>
                             <p class="modalTextCreater">${email}</p>
+                            <p class="modalTextCreater"> ${country} : ${market}</p>
+                            <p class="modalTextCreater"> ${name} : ${email}</p>
                         </div>
                         <div style="padding-right: 30px; margin-bottom:10px" class="modal-footer">
                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -327,20 +343,7 @@ function uploadCards() {
     })
 };
 
-socket.on('like-course', (value) => {
-    let likes = value.likeCount
-    const form = document.getElementsByClassName('like-course');
-    for (var i = 0; i < form.length; i++) {
-        let elemId = form[i].childNodes[1].dataset.id
-        if (elemId.toString() == value.id.toString()) {
-            console.log('Success', form[i].childNodes[3])
-            let countLike = form[i].childNodes[3]
-            countLike.innerText = likes + 1
-            break
-        } 
-    }
- 
-})
+
 
 $(document).ready(() => {
     $(document).on('click', '.upload_cards', uploadCards);
@@ -352,6 +355,7 @@ $(document).ready(() => {
 
 
 $(document).on('click', '.deleteStartup', function(e) {
+    console.log('delete')
     const status = e.target.parentNode.parentNode.cells[14].innerText
     const id = e.target.dataset.id
     if (status == 'true') {
@@ -364,12 +368,14 @@ $(document).on('click', '.deleteStartup', function(e) {
 });
 
 $(document).on('click', '.publishStartup', function(e) {
+    console.log('publish')
     const status = e.target.parentNode.parentNode.cells[14].innerText
     const id = e.target.dataset.id
     if (status == 'false') {
         fetch(`/admin/publish/${id}`, {
             method: 'GET'
         }).then(res => res.json()).then(r => {
+            console.log(r)
             e.target.parentNode.parentNode.cells[14].innerText = r.status
         })
     } 

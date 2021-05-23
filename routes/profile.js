@@ -3,6 +3,7 @@ const auth = require('../middleware/auth')
 const router = Router()
 const Startup = require('../models/startups')
 const User = require('../models/user')
+const arr = require('../public/dataMarket')
 
 function mapSubId(sub){
     return sub.item.map(c => ({
@@ -12,13 +13,9 @@ function mapSubId(sub){
 
 router.get('/', auth, async (req, res) => {
     try {
-        let username, isAdmin = false, currentUser = req.user.toObject()
+        let currentUser = req.user.toObject()
         const user = await req.user.populate('subscription.item.startupId', ).execPopulate()
         let subStartup = mapSubId(user.subscription)
-
-        if (!(req.hasOwnProperty('user') && req.user.role == 'USER'))  isAdmin = true
-        if (req.hasOwnProperty('user')) username = req.user.name
-        else username = ''
 
         let newArr = []
         const userLiked = await req.user.subscription.item
@@ -26,10 +23,9 @@ router.get('/', auth, async (req, res) => {
 
         res.render('profile', {
             title: 'Profile',
+            titlePage : 'Favorites',
             isProfile: true,
             subStartup,
-            isAdmin, 
-            username,
             currentUser, 
             newArr
         })
@@ -39,39 +35,40 @@ router.get('/', auth, async (req, res) => {
 })
 
 //get user profile by id
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         if (req.params.id != 'app.js') {
+            let arrStartups = [], newArr = []
+            const publishedStartups = await Startup.find({active : true}).populate('userId', 'email name avatarUrl').lean().sort({createdDate: -1})
+            publishedStartups.forEach(s => {
+                if (s.userId._id == req.params.id)
+                    arrStartups.push(s)
+            })  
+            if (req.user) {
+                const userLiked = await req.user.subscription.item
+                userLiked.map(s => { newArr.push(s.startupId._id) })
+            }
+           
 
-            let  newArr = [], username, isAdmin = false
-            const userLiked = await req.user.subscription.item
-            userLiked.map(s => { newArr.push(s.startupId._id) })
-
-            if (!(req.hasOwnProperty('user') && req.user.role == 'USER'))  isAdmin = true
-            if (req.hasOwnProperty('user')) username = req.user.name
-            else username = ''
         
-            const idUser = req.params.id
-            const currentUser = await User.findById(idUser).lean()
-            const user = await User.findById(idUser)
-            console.log(user)
+            const currentUser = await User.findById(req.params.id).lean()
+             /* const user = await User.findById(idUser)
+    
             const newUser = await user.populate('subscription.item.startupId').execPopulate()
 
             const starups = newUser.subscription.item.map(s => ({
                 ...s.startupId._doc
             }))
-            
+             */
             res.render('profile', {
-                title: 'Profle',
+                title: 'Profle', 
+                titlePage : 'Published',
                 isProfile: true,
                 userId: req.user ? req.user._id.toString() : null,
-                subStartup : starups,
-                isAdmin, 
+                subStartup : arrStartups,
                 newArr,
-                username,
-                currentUser, 
-                username: req.user.name
-            }, )  
+                currentUser
+            })  
 
         } else {
             res.end('')

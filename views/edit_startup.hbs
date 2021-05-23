@@ -8,7 +8,7 @@
     {{/if}}
 
     <br>
-    <form action="/startups/edit" method="POST" class="edit_startup">
+    <form action="/admin/edit" method="POST" class="edit_startup">
        
         <div class="input-field">
             <input name="title" id="title" type="text" class="validate" value="{{startup.title}}">
@@ -85,10 +85,10 @@
 
     </form>
 
-    <form action="/startups/remove" method="POST">
+    <form action="/admin/remove" method="POST">
         <input type="hidden" name="_csrf" value="{{csrf}}">
         <input type="hidden" name="id" value="{{startup._id}}">
-        <button type="submit" class="btn red">Delete startup</button>
+        <button type="submit" class="btn red" >Delete startup</button>
     </form>
     <br><br>
 </div>

@@ -34,13 +34,12 @@ const userSchema = new Schema({
     }
 })
 
-
+userSchema.virtual
 
 userSchema.methods.followStartup = function(startup) {
     let items = [...this.subscription.item]
     const idx = items.findIndex(c => {
         return c.startupId.toString() === startup.id.toString()
-        
     })
 
     if (idx < 0) {
@@ -53,6 +52,6 @@ userSchema.methods.followStartup = function(startup) {
 
     this.subscription = {item : items}
     return this.save()
-  }
+}
 
 module.exports = model('User', userSchema)

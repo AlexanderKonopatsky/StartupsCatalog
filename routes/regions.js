@@ -11,15 +11,12 @@ const reg4 = regionData.regionNorthAmerica;
 const reg5 = regionData.regionAfrica;
 
 router.get('/', (req, res) => {
-    let isAdmin = false 
-    if (!(req.hasOwnProperty('user') && req.user.role == 'USER'))  isAdmin = true
+
     res.render('regions', {
         title: 'Regions',
         isRegion: true,
-        reg1, reg2, reg3, reg4, reg5,
-        username: req.user.name,
-        isAdmin
-    });
+        reg1, reg2, reg3, reg4, reg5
+    })
 })
 
 router.get('/:country', async (req, res) => {

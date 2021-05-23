@@ -4,14 +4,11 @@ const User = require('../models/user')
 const route = Router()
 
 route.get('/', auth, (req, res) => {
-    let isAdmin = false
-    if (!(req.hasOwnProperty('user') && req.user.role == 'USER'))  isAdmin = true
+
     res.render('settings', {
         title: 'settings',
         isSettings: true,
         user : req.user.toObject(), 
-        username: req.user.name,
-        isAdmin
     })
 })
 

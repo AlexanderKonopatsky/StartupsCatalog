@@ -18,7 +18,7 @@
 
             <input type="hidden" name="_csrf" value="{{csrf}}">
 
-         <button  type="submit" class="btn btn-primary">Search</button>
+         <button  type="submit" class="btn">Search</button>
         </div>
 
     </form>
@@ -79,7 +79,7 @@
                                 data-id={{_id}}
                                 >Publish
                             </button>
-                           <a style="color: white;" href="/startups/edit/{{_id}}?allow=true"> <button style="width: 100px;"  class="btn ">Edit</button></a>
+                           <a style="color: white;" href="/admin/edit/{{_id}}?allow=true"> <button style="width: 100px;"  class="btn ">Edit</button></a>
                         </td>
                     </tr>
             {{/each}}
